@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrulyHealthy — Research / Government</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="pulse-dot"></span> TrulyHealthy</div>
+  <nav id="topbar-nav"></nav>
+</header>
+
+<div class="container">
+  <h1 class="page-title">Welcome, <span id="welcome-name"></span></h1>
+  <p class="page-subtitle">Anonymized, aggregate-only statistics. No individual patient data is accessible from this account.</p>
+
+  <div class="grid grid-3" id="stat-cards"></div>
+
+  <div class="grid grid-2" style="margin-top:28px;">
+    <div>
+      <h2 class="section-heading">Gender breakdown</h2>
+      <div class="card" id="gender-breakdown"></div>
+    </div>
+    <div>
+      <h2 class="section-heading">Blood group breakdown</h2>
+      <div class="card" id="blood-breakdown"></div>
+    </div>
+    <div>
+      <h2 class="section-heading">Doctor load by specialization</h2>
+      <div class="card" id="spec-breakdown"></div>
+    </div>
+    <div>
+      <h2 class="section-heading">Top diagnoses</h2>
+      <div class="card" id="diagnosis-breakdown"></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/research.js"></script>
+</body>
+</html>

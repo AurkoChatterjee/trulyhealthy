@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrulyHealthy — Sign in</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="auth-shell">
+  <div class="auth-card">
+    <div class="auth-logo"><span class="pulse-dot"></span> TrulyHealthy</div>
+    <p class="auth-tagline">Electronic Health Record system — appointments, patient records, and care coordination in one place.</p>
+
+    <div class="role-tabs" id="role-tabs">
+      <button class="active" data-role="PATIENT">Patient</button>
+      <button data-role="DOCTOR">Doctor</button>
+      <button data-role="ADMIN">Admin</button>
+      <button data-role="RESEARCH">Research / Gov</button>
+    </div>
+
+    <form id="login-form">
+      <label for="username">Username</label>
+      <input id="username" name="username" required autocomplete="username">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required autocomplete="current-password">
+      <button type="submit" class="btn btn-primary btn-block" style="margin-top:20px;">Sign in</button>
+    </form>
+
+    <div class="demo-hint" id="demo-hint">admin / Admin@123</div>
+
+    <div class="auth-footer">
+      New patient? <a href="register.html">Create an account</a> &nbsp;·&nbsp; <a href="about.html">About this project</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+const demoCreds = {
+    PATIENT: "patient1 / Patient@123",
+    DOCTOR: "doctor1 / Doctor@123",
+    ADMIN: "admin / Admin@123",
+    RESEARCH: "research1 / Research@123"
+};
+let selectedRole = "PATIENT";
+
+document.getElementById("role-tabs").addEventListener("click", (e) => {
+    if (e.target.tagName !== "BUTTON") return;
+    document.querySelectorAll("#role-tabs button").forEach(b => b.classList.remove("active"));
+    e.target.classList.add("active");
+    selectedRole = e.target.dataset.role;
+    document.getElementById("demo-hint").textContent = demoCreds[selectedRole];
+});
+
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    try {
+        const data = await apiFetch("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ username, password })
+        });
+        Auth.save(data.token, data.user);
+        window.location.href = dashboardFor(data.user.role);
+    } catch (err) {
+        toast(err.message, "error");
+    }
+});
+
+// Already logged in? Skip straight to dashboard.
+if (Auth.getToken() && Auth.getUser()) {
+    window.location.href = dashboardFor(Auth.getUser().role);
+}
+</script>
+</body>
+</html>

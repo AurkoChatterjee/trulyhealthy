@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — TrulyHealthy</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="pulse-dot"></span> TrulyHealthy</div>
+  <nav><a href="index.html">Sign in</a></nav>
+</header>
+
+<div class="container" style="max-width:760px;">
+  <h1 class="page-title">About this project</h1>
+  <p class="page-subtitle">TrulyHealthy is a full-stack Electronic Health Record (EHR) system: patients book, cancel and reschedule appointments; doctors manage patient history and treatment; administrators manage accounts; and research/government officials get anonymized, aggregate health statistics.</p>
+
+  <div class="card creator-card">
+    <div class="avatar-ring">AC</div>
+    <div>
+      <div style="font-weight:800; font-size:19px;">Created by Aurko Chatterjee</div>
+      <div class="muted" style="font-size:14px; margin-top:2px;">4th-year CSE student, VIT Bhopal University · Health Informatics</div>
+      <div class="social-links">
+        <!-- Replace with your actual LinkedIn URL -->
+        <a href="https://www.linkedin.com/in/aurkochatterjee" target="_blank" rel="noopener">🔗 LinkedIn</a>
+        <a href="https://github.com/AurkoChatterjee" target="_blank" rel="noopener">💻 GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Tech stack</h2>
+  <div class="tag-list">
+    <span class="tag">Java 17</span>
+    <span class="tag">Maven</span>
+    <span class="tag">com.sun.net.httpserver</span>
+    <span class="tag">JDBC</span>
+    <span class="tag">MySQL</span>
+    <span class="tag">Jackson (JSON)</span>
+    <span class="tag">HTML / CSS / JavaScript</span>
+  </div>
+
+  <h2 class="section-heading">Known limitations</h2>
+  <p class="muted" style="font-size:14.5px; line-height:1.7;">
+    Built as a portfolio project, with a few deliberate simplifications worth naming up front:
+    passwords are hashed with salted SHA-256 rather than a dedicated algorithm like bcrypt/argon2;
+    sessions are plain server-side tokens with no expiry; appointment slot conflicts are checked on
+    exact timestamp match rather than duration-aware overlap; there's no email/SMS notification
+    layer; and the research dashboard exposes aggregate counts only — no per-patient data — by design.
+  </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrulyHealthy — Admin</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="pulse-dot"></span> TrulyHealthy</div>
+  <nav id="topbar-nav"></nav>
+</header>
+
+<div class="container">
+  <h1 class="page-title">Welcome, <span id="welcome-name"></span></h1>
+  <p class="page-subtitle">Manage accounts and get a system-wide view of appointments.</p>
+
+  <div class="grid grid-3" id="stat-cards"></div>
+
+  <h2 class="section-heading">Create a staff account</h2>
+  <div class="card">
+    <form id="create-user-form">
+      <div class="form-row">
+        <div><label>Role</label>
+          <select name="role" id="new-role">
+            <option value="DOCTOR">Doctor</option>
+            <option value="ADMIN">Admin</option>
+            <option value="RESEARCH">Research / Government official</option>
+          </select>
+        </div>
+        <div><label>Full name</label><input name="fullName" required></div>
+      </div>
+      <div class="form-row">
+        <div><label>Username</label><input name="username" required></div>
+        <div><label>Password</label><input name="password" type="password" required></div>
+      </div>
+      <label>Email</label><input name="email" type="email">
+      <div id="doctor-extra-fields">
+        <div class="form-row">
+          <div><label>Specialization</label><input name="specialization"></div>
+          <div><label>License number</label><input name="licenseNo"></div>
+        </div>
+        <label>Contact number</label><input name="contact">
+      </div>
+      <button type="submit" class="btn btn-primary" style="margin-top:16px;">Create account</button>
+    </form>
+  </div>
+
+  <div class="flex-between">
+    <h2 class="section-heading" style="margin:0;">All accounts</h2>
+  </div>
+  <div class="card table-wrap">
+    <table id="users-table">
+      <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Status</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <h2 class="section-heading">All appointments</h2>
+  <div class="card table-wrap">
+    <table id="appt-table">
+      <thead><tr><th>Patient</th><th>Doctor</th><th>Date &amp; time</th><th>Status</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
