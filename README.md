@@ -89,23 +89,14 @@ from a successful login.
 - `GET /api/admin/users`, `POST /api/admin/users`, `PUT /api/admin/users/{id}/status`, `DELETE /api/admin/users/{id}`
 - `GET /api/research/stats` — anonymized counts and breakdowns only
 
-## Known limitations (worth stating up front for a viva)
 
-- Passwords are hashed with **salted SHA-256**, not a dedicated password
-  hashing algorithm like bcrypt/argon2 — a deliberate simplification to avoid
-  a heavier native dependency in a portfolio project.
-- Sessions are plain server-side tokens stored in a `sessions` table, with no
-  expiry or refresh mechanism.
-- Appointment conflict-checking compares exact timestamps rather than being
-  duration-aware (no notion of a doctor's slot length).
-- No email/SMS notifications on booking, cancellation, or reschedule.
-- The Research/Government dashboard intentionally exposes **aggregate counts
-  only** (gender/blood-group/specialization/diagnosis breakdowns) — it never
-  queries patient names, contacts, or free-text notes, by design rather than
-  by accident.
-- Single MySQL instance, no connection pooling (a fresh `DriverManager`
-  connection per request) — fine for a demo/portfolio load, not for
-  production scale.
+
+<img width="1485" height="701" alt="Screenshot 2026-09-26 090408" src="https://github.com/user-attachments/assets/7b89164e-1d51-4462-92f3-24c7567de0f7" />
+<img width="1487" height="707" alt="Screenshot 2026-09-26 090905" src="https://github.com/user-attachments/assets/32cba19b-b573-4cf0-93ea-b6dd464c5fb1" />
+<img width="1466" height="695" alt="Screenshot 2026-09-26 091339" src="https://github.com/user-attachments/assets/6fd40814-3fbb-4cba-8118-c1314154b857" />
+<img width="1470" height="695" alt="Screenshot 2026-09-26 091433" src="https://github.com/user-attachments/assets/f9f3b483-8ccd-4707-a419-3a3a52f97f41" />
+<img width="1466" height="697" alt="Screenshot 2026-09-26 091444" src="https://github.com/user-attachments/assets/9357c786-7c5a-429b-a910-4fd0ddc004fd" />
+
 
 ## Created by
 
