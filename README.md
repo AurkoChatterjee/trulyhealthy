@@ -89,7 +89,23 @@ from a successful login.
 - `GET /api/admin/users`, `POST /api/admin/users`, `PUT /api/admin/users/{id}/status`, `DELETE /api/admin/users/{id}`
 - `GET /api/research/stats` — anonymized counts and breakdowns only
 
+## Known limitations (worth stating up front for a viva)
 
+- Passwords are hashed with **salted SHA-256**, not a dedicated password
+  hashing algorithm like bcrypt/argon2 — a deliberate simplification to avoid
+  a heavier native dependency in a portfolio project.
+- Sessions are plain server-side tokens stored in a `sessions` table, with no
+  expiry or refresh mechanism.
+- Appointment conflict-checking compares exact timestamps rather than being
+  duration-aware (no notion of a doctor's slot length).
+- No email/SMS notifications on booking, cancellation, or reschedule.
+- The Research/Government dashboard intentionally exposes **aggregate counts
+  only** (gender/blood-group/specialization/diagnosis breakdowns) — it never
+  queries patient names, contacts, or free-text notes, by design rather than
+  by accident.
+- Single MySQL instance, no connection pooling (a fresh `DriverManager`
+  connection per request) — fine for a demo/portfolio load, not for
+  production scale.
 
 ## Created by
 

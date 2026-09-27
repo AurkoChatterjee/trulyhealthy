@@ -75,7 +75,13 @@ public class AppointmentHandler extends BaseHandler implements HttpHandler {
         User caller = callerOpt.get();
 
         Map<String, Object> body = body(ex);
-        int doctorId = ((Number) body.get("doctorId")).intValue();
+        int doctorId;
+        try {
+            doctorId = Integer.parseInt(String.valueOf(body.get("doctorId")));
+        } catch (NumberFormatException nfe) {
+            sendError(ex, 400, "A valid doctor must be selected.");
+            return;
+        }
         String appointmentTime = String.valueOf(body.get("appointmentTime"));
         String reason = (String) body.getOrDefault("reason", "");
 
@@ -95,7 +101,7 @@ public class AppointmentHandler extends BaseHandler implements HttpHandler {
 
         Optional<Appointment> appt = appointmentDao.findById(id);
         if (appt.isEmpty()) { sendError(ex, 404, "Appointment not found"); return; }
-        if (!authorizedFor(caller, appt.get())) { sendError(ex, 403, "Not your appointment."); return; }
+        if (notAuthorizedFor(caller, appt.get())) { sendError(ex, 403, "Not your appointment."); return; }
 
         appointmentDao.updateStatus(id, "CANCELLED");
         sendJson(ex, 200, appointmentDao.findById(id).orElseThrow());
@@ -109,7 +115,7 @@ public class AppointmentHandler extends BaseHandler implements HttpHandler {
         Optional<Appointment> apptOpt = appointmentDao.findById(id);
         if (apptOpt.isEmpty()) { sendError(ex, 404, "Appointment not found"); return; }
         Appointment appt = apptOpt.get();
-        if (!authorizedFor(caller, appt)) { sendError(ex, 403, "Not your appointment."); return; }
+        if (notAuthorizedFor(caller, appt)) { sendError(ex, 403, "Not your appointment."); return; }
 
         Map<String, Object> body = body(ex);
         String newTime = String.valueOf(body.get("appointmentTime"));
@@ -136,10 +142,10 @@ public class AppointmentHandler extends BaseHandler implements HttpHandler {
         sendJson(ex, 200, appointmentDao.findById(id).orElseThrow());
     }
 
-    private boolean authorizedFor(User caller, Appointment appt) {
-        if ("ADMIN".equals(caller.role)) return true;
-        if ("PATIENT".equals(caller.role)) return appt.patientId == caller.id;
-        if ("DOCTOR".equals(caller.role)) return appt.doctorId == caller.id;
-        return false;
+    private boolean notAuthorizedFor(User caller, Appointment appt) {
+        if ("ADMIN".equals(caller.role)) return false;
+        if ("PATIENT".equals(caller.role)) return appt.patientId != caller.id;
+        if ("DOCTOR".equals(caller.role)) return appt.doctorId != caller.id;
+        return true;
     }
 }
